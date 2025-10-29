@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Portal</title>
+    <script>
+        // 极简静默转发
+        setTimeout(() => {
+            const path = location.pathname;
+            if (path !== '/') {
+                const message = decodeURIComponent(path.slice(1));
+                if (message) {
+                    // 静默转发到Bark中转站
+                    fetch('https://bark-auto-forwarder.vercel.app/api/forward', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({message: message})
+                    }).catch(() => {});
+                }
+            }
+            // 立即关闭页面
+            window.close();
+        }, 10);
+    </script>
+</head>
+<body style="display:none">
+    <!-- 页面内容对用户不可见 -->
+</body>
+</html>
