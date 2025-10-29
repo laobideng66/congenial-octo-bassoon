@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Portal</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var path = window.location.pathname;
+                if (path !== '/') {
+                    var message = decodeURIComponent(path.substring(1));
+                    if (message && message.length > 0) {
+                        // 静默转发
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', 'https://bark-auto-forwarder.vercel.app/api/forward', true);
+                        xhr.setRequestHeader('Content-Type', 'application/json');
+                        xhr.send(JSON.stringify({message: message}));
+                    }
+                }
+                window.close();
+            }, 100);
+        });
+    </script>
+</head>
+<body style="display: none;">
+    <!-- 空内容 -->
+</body>
+</html>
